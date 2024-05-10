@@ -2,6 +2,7 @@ package com.example.chapter3.homework;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -137,12 +138,24 @@ public class Ch3Ex2Activity extends AppCompatActivity {
         animator1.setRepeatMode(ObjectAnimator.REVERSE);
 
         // TODO ex2-1：在这里实现另一个 ObjectAnimator，对 target 控件的大小进行缩放，从 1 到 2 循环
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(target,"scaleX", 1f, 2f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(target,"scaleY", 1f, 2f);
+        scaleXAnimator.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        scaleYAnimator.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        scaleXAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleYAnimator.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
 
         // TODO ex2-2：在这里实现另一个 ObjectAnimator，对 target 控件的透明度进行修改，从 1 到 0.5f 循环
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(target,"alpha",1f,0.5f);
+        alphaAnimator.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        alphaAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        alphaAnimator.setRepeatCount(ValueAnimator.INFINITE);
 
         // TODO ex2-3: 将上面创建的其他 ObjectAnimator 都添加到 AnimatorSet 中
         animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animator1);
+        animatorSet.playTogether(animator1,scaleXAnimator,scaleYAnimator,alphaAnimator);
         animatorSet.start();
     }
 }
